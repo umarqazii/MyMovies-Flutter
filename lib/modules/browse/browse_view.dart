@@ -161,6 +161,20 @@ class BrowseView extends StatelessWidget {
                 onChanged: (val) => controller.selectedYear.value = val,
               )),
 
+              const SizedBox(height: 16),
+
+              Obx(() => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Include adult content", style: TextStyle(color: Colors.grey)),
+                  Switch(
+                    value: controller.includeAdult.value,
+                    onChanged: controller.setIncludeAdult,
+                    activeColor: Colors.redAccent,
+                  ),
+                ],
+              )),
+
               const SizedBox(height: 20),
 
               Row(

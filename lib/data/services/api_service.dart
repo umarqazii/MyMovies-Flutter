@@ -11,13 +11,21 @@ class ApiService extends GetxService {
   final String _apiKey = dotenv.env['TMDB_API_KEY']!;
   final String _baseUrl = dotenv.env['BASE_URL']!;
 
+  bool _includeAdult = true;
+
+  bool get includeAdult => _includeAdult;
+
+  void setIncludeAdult(bool value) {
+    _includeAdult = value;
+    _dio.options.queryParameters['include_adult'] = value.toString();
+  }
 
   Future<ApiService> init() async {
     _dio.options.baseUrl = _baseUrl;
     _dio.options.queryParameters = {
       'api_key': _apiKey,
       'language': 'en-US',
-      'include_adult': 'true', // Safety first
+      'include_adult': _includeAdult.toString(),
     };
     return this;
   }

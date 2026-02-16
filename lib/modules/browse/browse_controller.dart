@@ -22,6 +22,7 @@ class BrowseController extends GetxController {
   var selectedYear = ''.obs;
   var selectedSort = 'popularity.desc'.obs;
   var selectedGenreId = 0.obs;
+  var includeAdult = true.obs; // Syncs with ApiService for search/discover
   Map<int, String> genreMap = {}; // Loaded on init
 
   // Scroll Controller
@@ -30,6 +31,7 @@ class BrowseController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    includeAdult.value = _apiService.includeAdult;
     _loadGenres();
     refreshMovies();
 
@@ -122,6 +124,12 @@ class BrowseController extends GetxController {
     selectedGenreId.value = 0;
     _currentMode = BrowseMode.trending;
     Get.back();
+    refreshMovies();
+  }
+
+  void setIncludeAdult(bool value) {
+    includeAdult.value = value;
+    _apiService.setIncludeAdult(value);
     refreshMovies();
   }
 }
